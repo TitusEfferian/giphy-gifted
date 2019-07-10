@@ -1,20 +1,73 @@
 import React from 'react';
-import { WHITE } from '../../styles/baseColor';
+import Card from '../Card';
 
-const Content = () => {
-    return(
+const Content = ({ data }) => {
+
+    return (
         <div style={styles.container}>
-
+             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            {data.map((x, y) => {
+                                if (y % 2 == 0) {
+                                    return (
+                                        <Card data={x} />
+                                    )
+                                }
+                            })}
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            {data.map((x, y) => {
+                                if (y % 2 != 0) {
+                                    return (
+                                        <Card data={x} />
+                                    )
+                                }
+                            })}
+                        </div>
+                    </div>
+            {/* {
+                window.innerWidth <= 484
+                    ?
+                    <div style={{ display: 'flex', justifyContent: 'center'}}>
+                        <div style={{ display: 'flex',flexDirection:'column' }}>
+                            {data.map((x, y) => {
+                                return (
+                                    <Card data={x} />
+                                )
+                            })}
+                        </div>
+                    </div>
+                    :
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            {data.map((x, y) => {
+                                if (y % 2 == 0) {
+                                    return (
+                                        <Card data={x} />
+                                    )
+                                }
+                            })}
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            {data.map((x, y) => {
+                                if (y % 2 != 0) {
+                                    return (
+                                        <Card data={x} />
+                                    )
+                                }
+                            })}
+                        </div>
+                    </div>
+            } */}
         </div>
     )
 }
 
 const styles = {
-    container:{
-        padding:24,
-        maxWidth:411,
-        backgroundColor:WHITE,
-        margin:'auto',
+    container: {
+        padding: 24,
+        maxWidth: 720,
+        margin: 'auto',
     }
 }
 
