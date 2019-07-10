@@ -1,7 +1,7 @@
 import React from 'react';
 import { ORANGE, WHITE } from '../../styles/baseColor';
 const HeaderSearch = (props) => {
-    const { value, onChange, setInput } = props
+    const { value, onChange, setInput, onClick } = props
     return (
         <div style={styles.container}>
             <input
@@ -10,7 +10,7 @@ const HeaderSearch = (props) => {
                 value={value}
                 onChange={(event) => { onChange(event, setInput) }}
             />
-            <p style={styles.searchButton}>search</p>
+            <p style={styles.searchButton} onClick={onClick}>search</p>
         </div>
     )
 }
