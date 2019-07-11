@@ -1,1 +1,0 @@
-export const giphyKey = 'xtQm4zLq33bocPsDatGDr7uBwvz9VFQN'
