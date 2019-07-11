@@ -2,22 +2,22 @@ import React from 'react';
 import Card from '../Card';
 
 const Content = ({ data }) => {
-
     return (
         <div style={styles.container}>
              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             {data.map((x, y) => {
-                                if (y % 2 == 0) {
+                                if (y % 2 === 0) {
                                     return (
                                         <Card data={x} />
+
                                     )
                                 }
                             })}
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                             {data.map((x, y) => {
-                                if (y % 2 != 0) {
+                                if (y % 2 !== 0) {
                                     return (
                                         <Card data={x} />
                                     )
@@ -25,40 +25,6 @@ const Content = ({ data }) => {
                             })}
                         </div>
                     </div>
-            {/* {
-                window.innerWidth <= 484
-                    ?
-                    <div style={{ display: 'flex', justifyContent: 'center'}}>
-                        <div style={{ display: 'flex',flexDirection:'column' }}>
-                            {data.map((x, y) => {
-                                return (
-                                    <Card data={x} />
-                                )
-                            })}
-                        </div>
-                    </div>
-                    :
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            {data.map((x, y) => {
-                                if (y % 2 == 0) {
-                                    return (
-                                        <Card data={x} />
-                                    )
-                                }
-                            })}
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            {data.map((x, y) => {
-                                if (y % 2 != 0) {
-                                    return (
-                                        <Card data={x} />
-                                    )
-                                }
-                            })}
-                        </div>
-                    </div>
-            } */}
         </div>
     )
 }

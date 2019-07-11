@@ -1,14 +1,15 @@
 import React from 'react';
 import { ORANGE, WHITE } from '../../styles/baseColor';
 const HeaderSearch = (props) => {
-    const { value, onChange, setInput, onClick } = props
+    const { value, onChange, onClick } = props
     return (
         <div style={styles.container}>
             <input
                 style={styles.inputText}
                 placeholder='Search giphy'
                 value={value}
-                onChange={(event) => { onChange(event, setInput) }}
+                onChange={onChange}
+                type='text'
             />
             <p style={styles.searchButton} onClick={onClick}>search</p>
         </div>
