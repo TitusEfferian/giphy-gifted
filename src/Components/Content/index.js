@@ -4,27 +4,27 @@ import Card from '../Card';
 const Content = ({ data }) => {
     return (
         <div style={styles.container}>
-             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            {data.map((x, y) => {
-                                if (y % 2 === 0) {
-                                    return (
-                                        <Card data={x} />
+            <div style={styles.columnContainer}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {data.map((x, y) => {
+                        if (y % 2 === 0) {
+                            return (
+                                <Card data={x} />
 
-                                    )
-                                }
-                            })}
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            {data.map((x, y) => {
-                                if (y % 2 !== 0) {
-                                    return (
-                                        <Card data={x} />
-                                    )
-                                }
-                            })}
-                        </div>
-                    </div>
+                            )
+                        }
+                    })}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {data.map((x, y) => {
+                        if (y % 2 !== 0) {
+                            return (
+                                <Card data={x} />
+                            )
+                        }
+                    })}
+                </div>
+            </div>
         </div>
     )
 }
@@ -34,6 +34,12 @@ const styles = {
         padding: 24,
         maxWidth: 720,
         margin: 'auto',
+        marginTop: 48,
+    },
+    columnContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 }
 
