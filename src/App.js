@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Components/HeaderSearch';
 import Content from './Components/Content';
-import { giphyKey, SEARCH_ENDPOINT } from './apis';
+import { SEARCH_ENDPOINT, RANDOM_ENDPOINT } from './apis';
 
 class App extends React.Component {
 
@@ -12,6 +12,7 @@ class App extends React.Component {
       loading: false,
       result: {},
       firstInit: true,
+      randomValue: '',
     }
   }
 
@@ -19,6 +20,7 @@ class App extends React.Component {
    * init Intersection Observer for infinite scroll purpose
    */
   componentDidMount() {
+    this.handleFirstLoadAndRandomLoad()
     this.observer = new IntersectionObserver(
       (entities, observer) => {
         entities.forEach(x => {
@@ -38,28 +40,57 @@ class App extends React.Component {
   }
 
   async handleSearchClick() {
-    const {inputValue} = this.state
+    const { inputValue } = this.state
+    if (inputValue) {
+      this.setState({
+        loading: true,
+        result: {
+          data: [],
+          offset: 0,
+        }
+      })
+
+      const result = await fetch(`${SEARCH_ENDPOINT}${inputValue}&offset=0`)
+      const parse = await result.json()
+
+      this.setState({
+        loading: false,
+        result: {
+          data: parse.data,
+          offset: parse.pagination.offset,
+        },
+      })
+    }
+    else{
+      alert('please type your keyword')
+    }
+  }
+
+  async handleFirstLoadAndRandomLoad() {
     this.setState({
-      loading: true
+      loading:true,
     })
-
-    const result = await fetch(`${SEARCH_ENDPOINT}${inputValue}&offset=0`)
-    const parse = await result.json()
-
+    const resultFetch = await fetch(RANDOM_ENDPOINT)
+    const parse = await resultFetch.json()
+    const resultFetchSearch = await fetch(`${SEARCH_ENDPOINT}${parse.data.title}&offset=0`)
+    const parseSearch = await resultFetchSearch.json()
     this.setState({
-      loading: false,
-      result: {
-        data: parse.data,
-        offset: parse.pagination.offset,
+      result:{
+        data: parseSearch.data,
+        offset : parseSearch.pagination.offset,
       },
-      firstInit: false,
+      loading:false,
+      randomValue: parse.data.title,
+      firstInit:false,
     })
   }
 
   async handleNext() {
-    const { inputValue, result } = this.state
-    const resultFetch = await fetch(`${SEARCH_ENDPOINT}${inputValue}&offset=${result.offset+1}`)
+    const { inputValue, result, randomValue } = this.state
+    const nextValue = inputValue || randomValue
+    const resultFetch = await fetch(`${SEARCH_ENDPOINT}${nextValue}&offset=${result.offset+1}`)
     const parse = await resultFetch.json()
+    console.log(parse)
     this.setState({
       result: {
         data: [...result.data, ...parse.data],
@@ -75,6 +106,7 @@ class App extends React.Component {
   render() {
     const { result, inputValue, loading } = this.state;
     const data = result.data || []
+    console.log(data)
     return (
       <>
         <Header
