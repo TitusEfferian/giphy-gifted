@@ -43,4 +43,4 @@ const styles = {
     }
 }
 
-export default Content;
+export default React.memo(Content);

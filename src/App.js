@@ -56,11 +56,11 @@ class App extends React.Component {
 
   async handleNext() {
     const { inputValue, result } = this.state
-    const resultFetch = await fetch(`http://api.giphy.com/v1/gifs/search?api_key=xtQm4zLq33bocPsDatGDr7uBwvz9VFQN&q=${inputValue}&limit=10&offset=${result.offset+1}`)
+    const resultFetch = await fetch(`http://api.giphy.com/v1/gifs/search?api_key=xtQm4zLq33bocPsDatGDr7uBwvz9VFQN&q=${inputValue}&limit=6&offset=${result.offset+1}`)
     const parse = await resultFetch.json()
     this.setState({
       result: {
-        data: [...this.state.result.data, ...parse.data],
+        data: [...result.data, ...parse.data],
         offset: parse.pagination.offset,
       }
     })
