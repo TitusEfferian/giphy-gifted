@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from './Components/HeaderSearch';
 import Content from './Components/Content';
-import { SEARCH_ENDPOINT, RANDOM_ENDPOINT } from './apis';
+import { SEARCH_ENDPOINT, RANDOM_ENDPOINT, TRENDING_ENDPOINT } from './apis';
+import { ORANGE } from './styles/baseColor';
 
 class App extends React.Component {
 
@@ -11,8 +12,9 @@ class App extends React.Component {
       inputValue: '',
       loading: false,
       result: {},
-      firstInit: true,
+      skipObserve: true,
       randomValue: '',
+      isTrending: false,
     }
   }
 
@@ -24,7 +26,7 @@ class App extends React.Component {
     this.observer = new IntersectionObserver(
       (entities, observer) => {
         entities.forEach(x => {
-          if (x.isIntersecting && !this.state.firstInit) {
+          if (x.isIntersecting && !this.state.skipObserve) {
             this.handleNext()
           }
         })
@@ -47,7 +49,8 @@ class App extends React.Component {
         result: {
           data: [],
           offset: 0,
-        }
+        },
+        skipObserve: true,
       })
 
       const result = await fetch(`${SEARCH_ENDPOINT}${inputValue}&offset=0`)
@@ -59,38 +62,59 @@ class App extends React.Component {
           data: parse.data,
           offset: parse.pagination.offset,
         },
+        skipObserve:false,
       })
     }
-    else{
+    else {
       alert('please type your keyword')
     }
   }
 
   async handleFirstLoadAndRandomLoad() {
     this.setState({
-      loading:true,
+      loading: true,
     })
     const resultFetch = await fetch(RANDOM_ENDPOINT)
     const parse = await resultFetch.json()
     const resultFetchSearch = await fetch(`${SEARCH_ENDPOINT}${parse.data.title}&offset=0`)
     const parseSearch = await resultFetchSearch.json()
     this.setState({
-      result:{
+      result: {
         data: parseSearch.data,
-        offset : parseSearch.pagination.offset,
+        offset: parseSearch.pagination.offset,
+      },
+      loading: false,
+      randomValue: parse.data.title,
+      skipObserve: false,
+    })
+  }
+
+  async handleTrendingLoad(){
+    this.setState({
+      loading:true,
+      result: {
+        data: [],
+        offset: 0,
+      },
+      skipObserve: true,
+    })
+    const resultFetch = await fetch(`${TRENDING_ENDPOINT}&limit=20`)
+    const parse = await resultFetch.json()
+    this.setState({
+      result:{
+        data: parse.data,
+        offset: parse.pagination.offset
       },
       loading:false,
-      randomValue: parse.data.title,
-      firstInit:false,
     })
+    
   }
 
   async handleNext() {
     const { inputValue, result, randomValue } = this.state
     const nextValue = inputValue || randomValue
-    const resultFetch = await fetch(`${SEARCH_ENDPOINT}${nextValue}&offset=${result.offset+1}`)
+    const resultFetch = await fetch(`${SEARCH_ENDPOINT}${nextValue}&offset=${result.offset + 1}`)
     const parse = await resultFetch.json()
-    console.log(parse)
     this.setState({
       result: {
         data: [...result.data, ...parse.data],
@@ -103,10 +127,50 @@ class App extends React.Component {
     this.setState({ inputValue: event.target.value })
   }
 
+  handleChangeTrending() {
+    const { isTrending } = this.state
+    if(!isTrending){
+      this.handleTrendingLoad()
+    }
+    else{
+      this.handleFirstLoadAndRandomLoad()
+    }
+    this.setState({ isTrending: !isTrending, })
+  }
+
+  renderTrendingTag() {
+    const { isTrending } = this.state
+    const styles = {
+      container: {
+        marginTop: 80,
+        display: 'flex',
+        alignItems: 'center'
+      },
+      tagContainer: {
+        color: 'white',
+        margin: 0,
+        marginLeft: 8,
+        padding: '8px 24px',
+        borderRadius: 24,
+        borderWidth: 1,
+        borderColor: ORANGE,
+        borderStyle: 'solid',
+        backgroundColor: isTrending ? ORANGE : null,
+        cursor: 'pointer'
+      }
+    }
+    return (
+      <div style={styles.container}>
+        <h4 style={styles.tagContainer} onClick={() => { this.handleChangeTrending() }}>
+          Trending
+        </h4>
+      </div>
+    )
+  }
+
   render() {
-    const { result, inputValue, loading } = this.state;
+    const { result, inputValue, loading, } = this.state;
     const data = result.data || []
-    console.log(data)
     return (
       <>
         <Header
@@ -114,6 +178,13 @@ class App extends React.Component {
           value={inputValue}
           onClick={() => { this.handleSearchClick() }}
         />
+        {
+          !inputValue
+            ?
+            this.renderTrendingTag()
+            :
+            null
+        }
         {
           loading ? null : <Content data={data} />
         }

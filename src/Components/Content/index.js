@@ -9,7 +9,7 @@ const Content = ({ data }) => {
                     {data.map((x, y) => {
                         if (y % 2 === 0) {
                             return (
-                                <Card data={x} />
+                                <Card data={x} key={y.toString()} />
 
                             )
                         }
@@ -19,7 +19,7 @@ const Content = ({ data }) => {
                     {data.map((x, y) => {
                         if (y % 2 !== 0) {
                             return (
-                                <Card data={x} />
+                                <Card data={x} key={y.toString()} />
                             )
                         }
                     })}
