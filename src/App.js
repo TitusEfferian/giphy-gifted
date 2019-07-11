@@ -9,7 +9,7 @@ const handleChange = (event, setInput) => {
 
 const handleSearchClick = async (setResult,inputValue, setLoading) => {
   setLoading(true)
-  const result = await fetch(`http://api.giphy.com/v1/gifs/search?api_key=xtQm4zLq33bocPsDatGDr7uBwvz9VFQN&q=${inputValue}&limit=20&offset=0`)
+  const result = await fetch(`http://api.giphy.com/v1/gifs/search?api_key=xtQm4zLq33bocPsDatGDr7uBwvz9VFQN&q=${inputValue}&limit=10&offset=0`)
   const parse = await result.json()
   setLoading(false)
   setResult({

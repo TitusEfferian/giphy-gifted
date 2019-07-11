@@ -1,5 +1,6 @@
 import React from 'react';
-
+import 'lazysizes';
+import Spinner from './Spinner-1s-200px.svg'
 const Card = ({ data }) => {
     return (
         <img
@@ -9,9 +10,11 @@ const Card = ({ data }) => {
                 height: data.images.fixed_width.height,
                 margin:4,
             }}
-            src={data.images.fixed_width.webp}
+            data-src={data.images.fixed_width.webp}
+            src={Spinner}
+            className='lazyload'
         />
     )
 }
 
-export default Card
+export default React.memo(Card)
