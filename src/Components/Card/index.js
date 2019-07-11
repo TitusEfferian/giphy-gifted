@@ -15,7 +15,7 @@ const Card = ({ data }) => {
             alt=""
             style={{
                 width: data.images.fixed_width.width - 8,
-                height: data.images.fixed_width.height,
+                height: 200,
                 margin:4,
                 cursor:'pointer',
             }}
