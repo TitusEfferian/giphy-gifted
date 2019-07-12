@@ -57,3 +57,7 @@ Root of the application starts here.
 
 i used `lazysizes` from `https://web.dev/fast` for performance consistency.
 it only load image that currently active on viewport.
+
+## Infinite loading
+
+i choose infinite loading instead of pagination, i also learning by doing how to used `Intersection Observer` when doing this project.
