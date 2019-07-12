@@ -110,6 +110,11 @@ class App extends React.Component {
     
   }
 
+  /**
+   * infinite scroll:
+   * these method used and triggered when IO component already in viewport,
+   * re-fetch the endpoint and push new data into existing data.
+   */
   async handleNext() {
     const { inputValue, result, randomValue } = this.state
     const nextValue = inputValue || randomValue

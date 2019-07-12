@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Node_modules were not included when submitted this project. Make sure to install all dependencies first.
+
+### `npm install`
+
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -27,42 +32,28 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# React Component Overview
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## HeaderSearch
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+this component handle input type and search click to search giphy result.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Content
 
-## Learn More
+this component handle all result from giphy endpoint included trending, random and search result. I designed using `flexbox` css style, Left side will show all even results, right side will show all odd result.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Card
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+this component handle all img source from giphy endpoint. At first load, this component only show `.jpg` images and if this component clicked, show `.gif` source.
 
-### Code Splitting
+## App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Root of the application starts here.
 
-### Analyzing the Bundle Size
+# Extra Works
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Image Lazyload
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+i used `lazysizes` from `https://web.dev/fast` for performance consistency.
+it only load image that currently active on viewport.
